@@ -21,7 +21,7 @@ export default function Dashboard() {
         <div className="wd-dashboard-course1">
           <Link to="/Kambaz/Courses/2345/Home"
                 className="wd-dashboard-course-link" >
-            <img src="/images/dog.jpg" width={200} />
+            <img src="/images/stacked.jpg" width={200} />
             <div>
               <h5> CS2345 HCI </h5>
               <p className="wd-dashboard-course-title">
