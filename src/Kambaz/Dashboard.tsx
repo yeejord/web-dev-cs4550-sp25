@@ -1,5 +1,4 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { BiCollapseVertical } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {

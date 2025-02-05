@@ -1,6 +1,5 @@
 import { Link} from "react-router-dom";
-import { Button, Container, Form, FormControl, FormGroup, FormLabel, FormSelect, InputGroup} from "react-bootstrap";
-import FormRange from "react-bootstrap/esm/FormRange";
+import { Form } from "react-bootstrap";
 
 export default function Signin() {
   return (
