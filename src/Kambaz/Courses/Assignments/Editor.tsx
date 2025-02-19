@@ -1,7 +1,12 @@
 import { Row, Col } from "react-bootstrap";
 import { Button, Form, FormControl, FormSelect, InputGroup} from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import db from "../../Database";
 
 export default function AssignmentEditor() {
+    const { cid } = useParams();
+    const { aid } = useParams();
+    const assignment = db.assignments.find((assignment) => assignment._id === aid)
     return (
       <div id="wd-assignments-screen">
           <Form.Group as={Row} className="mb-3 text-nowrap" controlId="wd-assignment-name">
@@ -9,30 +14,18 @@ export default function AssignmentEditor() {
               Assignment Name
               </Form.Label>
               <Col sm={12}>
-                <Form.Control placeholder="A1"/>
-              </Col>
-              
+                <Form.Control defaultValue={assignment?.title}/>
+              </Col> 
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ms-1 me-1" controlId="wd-textarea">
-              <Form.Control as="textarea" rows={12} placeholder="The assignment is available online.
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following:
-- Your full name and section
-- Links to each of the lab assignments
-- Link to the Kambaz application
-- Links to all relevant source code repositories
-
-The Kambaz application should include a link to navigate back to the landing page.">
-              </Form.Control>
+              <Form.Control as="textarea" rows={7} defaultValue={assignment?.description}/>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="wd-points">
               <Form.Label column sm={2} className="text-end">
               Points
               </Form.Label>
               <Col sm={10}>
-              <Form.Control type="number" placeholder="100"/>
+              <Form.Control type="number" defaultValue={assignment?.points}/>
               </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="wd-assignment-group">
@@ -85,21 +78,21 @@ The Kambaz application should include a link to navigate back to the landing pag
                 </FormSelect>
                 <Form.Label><b>Due </b></Form.Label>
                 <InputGroup className="mb-3">
-                  <FormControl defaultValue="2024-02-15" type = "date"/>
+                  <FormControl defaultValue={assignment?.due_date}/>
                 </InputGroup>           
                 <InputGroup className="d-flex mb-3">
                   <div className= "d-flex flex-column me-2">
                     <Form.Label>
                       <b>Available From</b> </Form.Label>
                     <div className="d-flex">
-                    <FormControl defaultValue="2024-02-01" type="date" />
+                    <FormControl defaultValue={assignment?.not_available_until}/>
                     </div>
                   </div>
                   <div className= "d-flex flex-column me-2 mb-3 ">
                     <Form.Label>
                     <b>Until</b> </Form.Label>
                     <div className="d-flex">
-                    <FormControl type="date"/>
+                    <FormControl/>
                     </div>
                   </div>
                 </InputGroup>
@@ -107,8 +100,12 @@ The Kambaz application should include a link to navigate back to the landing pag
           </Form.Group>
           <hr />
           <div className="d-flex float-end">
-            <Button className="bg-secondary text-black border border-0 me-1">Cancel</Button>
-            <Button className="bg-danger text-white border border-0">Save</Button>
+            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-secondary text-black border border-0 me-2">
+              Cancel
+            </Link>
+            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-danger text-white border border-0">
+              Save
+            </Link>
           </div>
   </div>
   );}
