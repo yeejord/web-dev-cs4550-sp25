@@ -3,7 +3,14 @@ import { Form, FormControl, FormSelect, InputGroup} from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import db from "../../Database";
 
-export default function AssignmentEditor() {
+export default function AssignmentEditor( {assignmentName, setAssignmentName, assignmentDescription,
+      setAssignmentDescription, assignmentPoints, setAssignmentPoints, assignmentDueDate, setAssignmentDueDate,
+      assignmentAvailableFromDate, setAssignmentAvailableFromDate, assignmentAvailableUntilDate, setAssignmentAvailableUntilDate, addAssignment,}: {
+    show: boolean; handleClose: () => void; dialogTitle: string; assignmentName: string; setAssignmentName: (name: string) => void;
+    assignmentDescription: string; setAssignmentDescription: (name: string) => void; assignmentPoints: string; setAssignmentPoints: (points: string) => void; 
+    assignmentDueDate: string; setAssignmentDueDate: (name: string) => void;
+    assignmentAvailableFromDate: string; setAssignmentAvailableFromDate: (name: string) => void; assignmentAvailableUntilDate: string; setAssignmentAvailableUntilDate: (name: string) => void;
+    addAssignment: () => void;}) {
     const { cid } = useParams();
     const { aid } = useParams();
     const assignment = db.assignments.find((assignment) => assignment._id === aid)
@@ -14,18 +21,21 @@ export default function AssignmentEditor() {
               Assignment Name
               </Form.Label>
               <Col sm={12}>
-                <Form.Control defaultValue={assignment?.title}/>
+                <Form.Control defaultValue={assignment?.title} value={assignmentName}
+                  onChange={(e) => { setAssignmentName(e.target.value); }}/>
               </Col> 
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ms-1 me-1" controlId="wd-textarea">
-              <Form.Control as="textarea" rows={7} defaultValue={assignment?.description}/>
+              <Form.Control as="textarea" rows={7} defaultValue={assignment?.description}
+                onChange={(e) => { assignmentDescription=e.target.value }}/>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="wd-points">
               <Form.Label column sm={2} className="text-end">
               Points
               </Form.Label>
               <Col sm={10}>
-              <Form.Control type="number" defaultValue={assignment?.points}/>
+              <Form.Control type="number" defaultValue={assignment?.points}
+                onChange={(e) => { assignmentPoints=e.target.value }}/>
               </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="wd-assignment-group">
@@ -78,21 +88,23 @@ export default function AssignmentEditor() {
                 </FormSelect>
                 <Form.Label><b>Due </b></Form.Label>
                 <InputGroup className="mb-3">
-                  <FormControl defaultValue={assignment?.due_date}/>
+                  <FormControl defaultValue={assignment?.due_date}
+                    onChange={(e) => { assignmentDueDate=e.target.value }}/>
                 </InputGroup>           
                 <InputGroup className="d-flex mb-3">
                   <div className= "d-flex flex-column me-2">
                     <Form.Label>
                       <b>Available From</b> </Form.Label>
                     <div className="d-flex">
-                    <FormControl defaultValue={assignment?.not_available_until}/>
+                    <FormControl defaultValue={assignment?.not_available_until}
+                      onChange={(e) => { assignmentAvailableFromDate=e.target.value }}/>
                     </div>
                   </div>
                   <div className= "d-flex flex-column me-2 mb-3 ">
                     <Form.Label>
                     <b>Until</b> </Form.Label>
                     <div className="d-flex">
-                    <FormControl/>
+                    <FormControl defaultValue={assignment?.available_until}/>
                     </div>
                   </div>
                 </InputGroup>
@@ -103,7 +115,8 @@ export default function AssignmentEditor() {
             <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-secondary text-black border border-0 me-2">
               Cancel
             </Link>
-            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-danger text-white border border-0">
+            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-danger text-white border border-0" 
+              onClick={() => setAssignmentName(assignmentName) }>
               Save
             </Link>
           </div>
