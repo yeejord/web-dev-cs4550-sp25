@@ -3,12 +3,7 @@ import { Form, FormControl, FormSelect, InputGroup} from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import db from "../../Database";
 
-export default function AssignmentEditor( {assignmentName, setAssignmentName, }: {
-    show: boolean; handleClose: () => void; dialogTitle: string; assignmentName: string; setAssignmentName: (name: string) => void;
-    assignmentDescription: string; setAssignmentDescription: (name: string) => void; assignmentPoints: string; setAssignmentPoints: (points: string) => void; 
-    assignmentDueDate: string; setAssignmentDueDate: (name: string) => void;
-    assignmentAvailableFromDate: string; setAssignmentAvailableFromDate: (name: string) => void; assignmentAvailableUntilDate: string; setAssignmentAvailableUntilDate: (name: string) => void;
-    addAssignment: () => void;}) {
+export default function AssignmentEditor() {
     const { cid } = useParams();
     const { aid } = useParams();
     const assignment = db.assignments.find((assignment) => assignment._id === aid)
@@ -19,8 +14,7 @@ export default function AssignmentEditor( {assignmentName, setAssignmentName, }:
               Assignment Name
               </Form.Label>
               <Col sm={12}>
-                <Form.Control defaultValue={assignment?.title} value={assignmentName}
-                  onChange={(e) => { setAssignmentName(e.target.value); }}/>
+                <Form.Control defaultValue={assignment?.title} />
               </Col> 
           </Form.Group>
           <Form.Group as={Row} className="mb-3 ms-1 me-1" controlId="wd-textarea">
@@ -111,8 +105,7 @@ export default function AssignmentEditor( {assignmentName, setAssignmentName, }:
             <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-secondary text-black border border-0 me-2">
               Cancel
             </Link>
-            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-danger text-white border border-0" 
-              onClick={() => setAssignmentName(assignmentName)}>
+            <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn bg-danger text-white border border-0" >
               Save
             </Link>
           </div>
